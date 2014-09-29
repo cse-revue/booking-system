@@ -1,0 +1,15 @@
+<div id="controls">
+
+</div>
+<div id="map">
+    <% @theatre.segments.each do |segment| %>
+        <div class="segment">
+          <div class="segment-name"></div>
+          <div class="segment-seats" style="height:<%=segment.height%>px">
+            <% segment.seats.each do |seat| %>
+                <div class="seat free-seat" style="left:<%=seat.percent_x%>%;top:<%=seat.percent_y%>%"></div>
+            <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>

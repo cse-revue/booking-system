@@ -1,0 +1,30 @@
+// Place all the styles related to the theatre controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#map {
+  position:relative;
+}
+
+.segment {
+  position:relative;
+}
+
+.segment-seats {
+  position:relative;
+}
+
+.seat {
+  position:absolute;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.free-seat {
+  background-color: green;
+}
+
+.booked-seat {
+  background-color: red;
+}

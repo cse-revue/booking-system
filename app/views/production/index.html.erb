@@ -1,0 +1,17 @@
+<div class="container">
+<h1>Productions</h1>
+
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-2">
+
+<table class="table table-bordered">
+  <tr><th>#</th><th>Name</th><th>Theatre</th></tr>
+  <% Production.all.each do |p| %>
+    <tr><td><%=p.id%></td><td>
+        <a href="/production/<%=p.webname%>"><%="#{p.pretitle}: #{p.title}"%></a>
+      </td><td><%=if p.theatre then p.theatre.name end%></td></tr>
+  <% end %>
+</table>
+
+  </div>
+</div>

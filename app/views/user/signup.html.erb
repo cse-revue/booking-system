@@ -1,0 +1,35 @@
+<div class="container">
+<h1>Sign Up</h1>
+
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-2">
+<%= form_for :user  do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Your Name' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control', placeholder: 'you@example.com' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :phone, 'Phone Number' %>
+    <%= f.text_field :phone, class: 'form-control', placeholder: '0403157219' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :new_password, 'Password' %>
+    <%= f.password_field :new_password, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :new_password_confirmation, 'Repeat Password' %>
+    <%= f.password_field :new_password_confirmation, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Sign Up", class: 'btn btn-primary btn-lg' %>
+  </div>
+<% end %>
+<p>Already signed up? <a href="/user/login">Login here!</a></p>
+</div>
+</div>
+</div>
