@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_user
-    User.find_by session_key: session[:user_session_key]
+    if session[:user_session_key].nil?
+      nil
+    else
+      User.find_by session_key: session[:user_session_key]
+    end
   end
 
   helper_method :current_user

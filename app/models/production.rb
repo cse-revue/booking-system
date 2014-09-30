@@ -1,6 +1,8 @@
 class Production < ActiveRecord::Base
   belongs_to :theatre
   has_many :performances
+  has_many :production_users
+  has_and_belongs_to_many :users, join_table: 'production_users'
 
   def full_title
     "#{pretitle}: #{title}"
@@ -8,6 +10,14 @@ class Production < ActiveRecord::Base
 
   def seat_statuses
     SeatStatus.joins(:performance).where(performances: {production_id: self.id})
+  end
+
+  def ticketers
+    users
+  end
+
+  def non_ticketers
+    User.find :all, conditions: ['id not in (?)', ticketers.map{|x|x.id}]
   end
 
   def qseats

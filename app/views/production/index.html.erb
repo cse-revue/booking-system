@@ -6,7 +6,7 @@
 
 <table class="table">
   <tr><th>#</th><th>Name</th><th>Theatre</th></tr>
-  <% Production.all.each do |p| %>
+  <% Production.all.sort.reverse.each do |p| %>
     <tr><td><%=p.id%></td><td>
         <a href="/production/<%=p.webname%>"><%="#{p.pretitle}: #{p.title}"%></a>
       </td><td><%=if p.theatre then p.theatre.name end%></td></tr>

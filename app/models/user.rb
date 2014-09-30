@@ -2,6 +2,7 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   has_and_belongs_to_many :_productions, class_name: 'Production', join_table: 'production_users'
+  has_many :production_users
 
 
   attr_accessor :new_password, :new_password_confirmation
@@ -39,11 +40,23 @@ class User < ActiveRecord::Base
     "http://www.gravatar.com/avatar/#{hash}"
   end
 
+  def can_manage(production)
+    if superadmin
+      return true
+    end
+    prod = production_users.find_by production_id: production.id
+    unless prod.nil?
+      return prod.manager
+    end
+  end
+
+  def <=> (other)
+    self.name <=> other.name
+  end
+
   private
   def hash_new_password
     self.password = BCrypt::Password.create(@new_password)
   end
-
-
 
 end

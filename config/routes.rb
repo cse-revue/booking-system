@@ -1,4 +1,5 @@
 Bookingsystem::Application.routes.draw do
+  get "booking/create"
   get "user/signup"
   post "user/signup", to: "user#do_signup"
   get "user/login"
@@ -8,6 +9,8 @@ Bookingsystem::Application.routes.draw do
   get "user", to: "user#index"
   get "user/logout", to: "user#logout"
   
+  get "production/:webname/manage", to: "production#manage"
+
   get "production/create"
   post "production/create", to: "production#do_create"
   get "production/:webname", to: "production#info"

@@ -22,6 +22,11 @@ class ProductionController < ApplicationController
     render layout: 'admin'
   end
 
+  def manage
+    @production = Production.find_by webname: params[:webname]
+    render layout: 'admin'
+  end
+
   def modify
   end
 
