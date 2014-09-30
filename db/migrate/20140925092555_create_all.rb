@@ -10,11 +10,17 @@ class CreateAll < ActiveRecord::Migration
       t.belongs_to :theatre
     end
     
+    create_table :prices do |t|
+      t.string :name
+      t.float :price
+      t.boolean :admin_only
+      t.belongs_to :performance
+    end
+
     create_table :performances do |t|
       t.string :name
       t.belongs_to :production
       t.datetime :start
-      t.text :prices
     end
 
     create_table :theatres do |t|
@@ -46,18 +52,14 @@ class CreateAll < ActiveRecord::Migration
       t.string :guid
     end
 
-    create_table :unavailable_seats do |t|
-      t.string :seat
-      t.belongs_to :performance
-    end
-
-    create_table :booked_seats do |t|
-      t.belongs_to :booking
+    create_table :seat_statuses do |t|
       t.belongs_to :seat
+      t.belongs_to :booking
+      t.belongs_to :performance
       t.string :status
+      
       t.timestamps
     end
-
 
     create_table :users do |t|
       t.string :name
@@ -65,12 +67,18 @@ class CreateAll < ActiveRecord::Migration
       t.string :password
       t.string :phone
       t.string :session_key
+      t.boolean :superadmin
     end
 
-    create_table :user_productions do |t|
+    create_table :production_users do |t|
       t.belongs_to :user
       t.belongs_to :production
       t.boolean :manager
+    end
+
+    create_table :closed_segments do |t|
+      t.belongs_to :performance
+      t.belongs_to :segment
     end
     
     create_table :booking_statistics do |t|

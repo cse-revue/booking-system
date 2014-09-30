@@ -1,4 +1,7 @@
-<div class="container">
-<h1><%=@user.name%></h1>
-<%=@user.session_key%>
-</div>
+<h2>Productions</h2>
+<table class="table">
+  <tr><th>Production</th><th>Sold Tickets</th></tr>
+<% current_user.productions.sort.each do |p| %>
+  <tr><td><a href="/production/<%= p.webname %>"><%= p.full_title %></a></td><td><%= p.seats_filled.length %></td></tr>
+<% end %>
+</table>

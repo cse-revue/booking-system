@@ -9,6 +9,9 @@ class ProductionController < ApplicationController
     redirect_to "/production/#{prod.webname}"
   end
 
+  def create
+    render layout: 'admin'
+  end
 
   def index
     @productions = Production.all
@@ -16,6 +19,7 @@ class ProductionController < ApplicationController
   
   def info
     @production = Production.find_by webname: params[:webname]
+    render layout: 'admin'
   end
 
   def modify

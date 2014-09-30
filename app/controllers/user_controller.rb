@@ -6,6 +6,10 @@ class UserController < ApplicationController
     params.require(:user).permit(:name, :email, :phone, :new_password, :new_password_confirmation)
   end
 
+  def signup
+    render layout: 'admin'
+  end
+  
   def do_signup
     User.create user_signup_params
     redirect_to "/user/login"
@@ -16,6 +20,7 @@ class UserController < ApplicationController
   end
 
   def login
+    render layout: 'admin'
   end
 
   def do_login
@@ -46,10 +51,8 @@ class UserController < ApplicationController
     else
       @user = current_user
     end
+
+    render layout: 'admin'
   end
 
-  private
-  def current_user
-    User.find_by session_key: session[:user_session_key]
-  end
 end

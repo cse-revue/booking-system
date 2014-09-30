@@ -13,14 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140925092555) do
 
-  create_table "booked_seats", force: true do |t|
-    t.integer  "booking_id"
-    t.integer  "seat_id"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "booking_statistics", force: true do |t|
     t.integer  "booking_id"
     t.integer  "user_id"
@@ -36,11 +28,28 @@ ActiveRecord::Schema.define(version: 20140925092555) do
     t.string  "guid"
   end
 
+  create_table "closed_segments", force: true do |t|
+    t.integer "performance_id"
+    t.integer "segment_id"
+  end
+
   create_table "performances", force: true do |t|
     t.string   "name"
     t.integer  "production_id"
     t.datetime "start"
-    t.text     "prices"
+  end
+
+  create_table "prices", force: true do |t|
+    t.string  "name"
+    t.float   "price"
+    t.boolean "admin_only"
+    t.integer "performance_id"
+  end
+
+  create_table "production_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "production_id"
+    t.boolean "manager"
   end
 
   create_table "productions", force: true do |t|
@@ -51,6 +60,15 @@ ActiveRecord::Schema.define(version: 20140925092555) do
     t.string  "contact_email"
     t.string  "ticket_cc_email"
     t.integer "theatre_id"
+  end
+
+  create_table "seat_statuses", force: true do |t|
+    t.integer  "seat_id"
+    t.integer  "booking_id"
+    t.integer  "performance_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "seats", force: true do |t|
@@ -74,23 +92,13 @@ ActiveRecord::Schema.define(version: 20140925092555) do
     t.integer "width"
   end
 
-  create_table "unavailable_seats", force: true do |t|
-    t.string  "seat"
-    t.integer "performance_id"
-  end
-
-  create_table "user_productions", force: true do |t|
-    t.integer "user_id"
-    t.integer "production_id"
-    t.boolean "manager"
-  end
-
   create_table "users", force: true do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.string "phone"
-    t.string "session_key"
+    t.string  "name"
+    t.string  "email"
+    t.string  "password"
+    t.string  "phone"
+    t.string  "session_key"
+    t.boolean "superadmin"
   end
 
 end

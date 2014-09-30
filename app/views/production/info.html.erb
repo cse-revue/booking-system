@@ -1,1 +1,34 @@
-<h1><%= @production.title %></h1>
+<h2>Sales</h2>
+
+<div class="row">
+  <div class="col-md-8 col-xs-offset-2">
+    
+    <table class="table">
+  <tr><th class="col-md-2">Night</th>
+    <th class="col-md-1">Paid</th>
+    <th class="col-md-1">Pending</th>
+    <th class="col-md-1">VIP</th>
+    <th class="col-md-1">Total</th>
+    <th class="col-md-2">Confirmd (unpaid)</th>
+  </tr>
+  <% @production.performances.sort.each do |p| %>
+    <tr><td><%= p.name %></td>
+      <td><%= p.seats_paid.length %></td>
+      <td><%= p.seats_pay_at_door.length %></td>
+      <td><%= p.seats_vip.length %></td>
+      <td><strong><%=p.seats_filled.length%><strong></td>
+      <td><%= p.seats_confirmed.length %></td>
+    </tr>
+  <% end %>
+
+  <tr class="info"><td><strong>Totals</strong></td>
+    <td><%= @production.seats_paid.length %></td>
+    <td><%= @production.seats_pay_at_door.length %></td>
+    <td><%= @production.seats_vip.length %></td>
+    <td><strong><%= @production.seats_filled.length %></strong></td>
+    <td><%= @production.seats_confirmed.length %></td>
+  </tr>
+
+    </table>
+  </div>
+</div>

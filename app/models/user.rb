@@ -1,6 +1,9 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  has_and_belongs_to_many :_productions, class_name: 'Production', join_table: 'production_users'
+
+
   attr_accessor :new_password, :new_password_confirmation
   validates_confirmation_of :new_password, if: :password_changed?
   before_save :hash_new_password, if: :password_changed?
@@ -13,6 +16,14 @@ class User < ActiveRecord::Base
     "#{self.name} (#{self.email})"
   end
 
+  def productions
+    if self.superadmin
+      Production.all
+    else
+      self._productions
+    end
+  end
+
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user
@@ -23,9 +34,16 @@ class User < ActiveRecord::Base
     return nil
   end
 
+  def gravatar_url
+    hash = Digest::MD5.hexdigest self.email.downcase
+    "http://www.gravatar.com/avatar/#{hash}"
+  end
+
   private
   def hash_new_password
     self.password = BCrypt::Password.create(@new_password)
   end
+
+
 
 end
