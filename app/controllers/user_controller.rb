@@ -46,8 +46,8 @@ class UserController < ApplicationController
   end
 
   def index
-    if !session[:remember_me]
-      redirect_to "/user/login"
+    if !session[:user_session_key]
+      return redirect_to "/user/login"
     else
       @user = current_user
     end

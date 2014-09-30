@@ -3,7 +3,9 @@
 <div class="container-fluid">
 
   <ul class="nav navbar-nav navbar-left">
-    <li><a href="/user">Production List</a></li>
+    <% unless current_user.nil? %>
+      <li><a href="/user">Production List</a></li>
+    <% end %>
     <% unless @production.nil? %>
       <li><a href="/production/<%= @production.webname %>" class="brand"><%= @production.full_title %></a></li>
     <% end %>
