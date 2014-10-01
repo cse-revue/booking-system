@@ -8,6 +8,8 @@ Bookingsystem::Application.routes.draw do
   get "user/modify"
   get "user", to: "user#index"
   get "user/logout", to: "user#logout"
+  post "user/:user_id/make_ticketer/:production_id/:manager", to: "user#make_ticketer"
+  post "user/:user_id/remove_ticketer/:production_id", to: "user#remove_ticketer"
   
   get "production/:webname/manage", to: "production#manage"
 

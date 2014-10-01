@@ -1,0 +1,23 @@
+  <tr><td><%= @user.name %></td><td><%= @user.email %></td><td>
+      <% if @user.superadmin %>
+        <span style='color: blue'>Superadmin</span>
+      <% elsif @user.can_manage @production %>
+        <span style='color: green'>Manager</span>
+      <% else %>
+        <span style='color: black'>Ticketer</span>
+      <% end %>
+    </td>
+      <% if current_user and current_user.superadmin %>
+        <td style="text-align:center">
+        <% if @user.can_manage @production %>
+          <button data-href="/user/<%=@user.id%>/make_ticketer/<%=@production.id%>/0" type="button" class="btn btn-warning make_manager">Demone to Ticketer</button>
+        <% elsif %> 
+          <button data-href="/user/<%=@user.id%>/make_ticketer/<%=@production.id%>/1" type="button" class="btn btn-success make_manager">Promote to Manager</button>
+        <% end %>
+        </td>
+      <% end %>
+    <td style="text-align:center">
+      <button data-href="/user/<%=@user.id%>/remove_ticketer/<%=@production.id%>" type="button" class="btn btn-danger remove_ticketer">Remove from Production</button>
+    </td>
+  </tr>
+

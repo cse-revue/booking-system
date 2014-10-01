@@ -31,8 +31,55 @@ searchable_table = (input, table, fields) ->
         else
           row.hide()
 
+insert_into_table = (table, to_insert, sort_field) ->
+  to_compare = $(to_insert.children()[sort_field]).text()
 
+  trs = table.children().children()
+  after = null
+  prev = null
+  before = null
+  for tr in trs[1..]
+    prev = $(tr)
+    tds = prev.children()
+    to_compare_to = $(tds[sort_field]).text()
+    if to_compare_to > to_compare
+      after = prev
+      break
+    else
+      before = prev
+  if before?
+    before.after(to_insert)
+  else if after?
+    after.before(to_insert)
 
+manager_click = ->
+    element = $(this)
+    href = element.attr('data-href')
+    $.post href, (resp) ->
+      new_row = $(resp)
+      element.parent().parent().prev().after(new_row)
+      element.parent().parent().remove()
+      new_row.find('.make_manager').click manager_click
+      new_row.find('.remove_ticketer').click remove_ticketer_click
+
+make_ticketer_click = ->
+    element = $(this)
+    href = element.attr('data-href')
+    $.post href, (resp) ->
+      new_row = $(resp)
+      element.parent().parent().remove()
+      insert_into_table $('#ticketers'), new_row, 0
+      new_row.find('.remove_ticketer').click remove_ticketer_click
+      new_row.find('.make_manager').click manager_click
+
+remove_ticketer_click = ->
+    element = $(this)
+    href = element.attr('data-href')
+    $.post href, (resp) ->
+      new_row = $(resp)
+      element.parent().parent().remove()
+      insert_into_table $('#non-ticketers'), new_row, 0
+      new_row.find('.make_ticketer').click make_ticketer_click
 
 $ ->
   $('#production_title').keyup ->
@@ -46,3 +93,10 @@ $ ->
 
   searchable_table $('#search-ticketers'), $('#ticketers'), [0, 1]
   searchable_table $('#search-non-ticketers'), $('#non-ticketers'), [0, 1]
+
+
+  $('.make_ticketer').click make_ticketer_click
+
+  $('.make_manager').click manager_click
+
+  $('.remove_ticketer').click remove_ticketer_click

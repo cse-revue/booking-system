@@ -55,4 +55,23 @@ class UserController < ApplicationController
     render layout: 'admin'
   end
 
+  def make_ticketer
+    user = User.find_by id: params[:user_id]
+    production = Production.find_by id: params[:production_id]
+    user.make_ticketer_of production, params[:manager] == '1'
+
+    @production = production
+    @user = user
+    render 'production/ticketer_row', layout: false
+  end
+
+  def remove_ticketer
+    user = User.find_by id: params[:user_id]
+    production = Production.find_by id: params[:production_id]
+    user.remove_ticketer_from production
+    @production = production
+    @user = user
+    render 'production/non_ticketer_row', layout: false
+  end
+
 end

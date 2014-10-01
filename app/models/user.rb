@@ -4,6 +4,22 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :_productions, class_name: 'Production', join_table: 'production_users'
   has_many :production_users
 
+  def make_ticketer_of(production, manager = false)
+    pu = ProductionUser.where(user_id: self.id, production_id: production.id).take
+    if pu.nil?
+      ProductionUser.create(user_id: self.id, production_id: production.id, manager: manager)
+    else 
+      pu.manager = manager
+      pu.save
+    end
+  end
+
+  def remove_ticketer_from(production)
+    pu = ProductionUser.where(user_id: self.id, production_id: production.id).take
+    unless pu.nil?
+      pu.destroy
+    end
+  end
 
   attr_accessor :new_password, :new_password_confirmation
   validates_confirmation_of :new_password, if: :password_changed?

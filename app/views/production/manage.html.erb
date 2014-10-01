@@ -1,7 +1,7 @@
 <h2>Ticketers for <%= @production.title %></h2>
 <input id="search-ticketers" type="text" class="form-control" placeholder="Search Ticketers">
 <table id="ticketers" class="table">
-  <tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+  <tr><th>Name</th><th>Email</th><th>Status</th></tr>
   <% @production.ticketers.sort.each do |u| %>
     <tr><td><%= u.name %></td><td><%= u.email %></td><td>
         <% if u.superadmin %>
@@ -12,19 +12,19 @@
           <span style='color: black'>Ticketer</span>
         <% end %>
       </td>
-      <td>
-        <% if u.can_manage @production and not u.superadmin%>
-          <% if current_user and current_user.superadmin %>
-            <button type="button" class="btn btn-warning">Demote to Ticketer</button>
+        <% if current_user and current_user.superadmin %>
+          <td style="text-align:center">
+          <% if u.can_manage @production %>
+            <button data-href="/user/<%=u.id%>/make_ticketer/<%=@production.id%>/0" type="button" class="btn btn-warning make_manager">Demone to Ticketer</button>
+          <% elsif %> 
+            <button data-href="/user/<%=u.id%>/make_ticketer/<%=@production.id%>/1" type="button" class="btn btn-success make_manager">Promote to Manager</button>
           <% end %>
-          <button type="button" class="btn btn-danger">Remove from Production</button>
-        <% elsif not u.superadmin %> 
-          <% if current_user and current_user.superadmin %>
-            <button type="button" class="btn btn-success">Promote to Manager</button>
-          <% end %>
-          <button type="button" class="btn btn-danger">Remove from Production</button>
+          </td>
         <% end %>
+      <td style="text-align:center">
+        <button data-href="/user/<%=u.id%>/remove_ticketer/<%=@production.id%>" type="button" class="btn btn-danger remove_ticketer">Remove from Production</button>
       </td>
+    </tr>
   <% end %>
 </table>
 
@@ -35,8 +35,9 @@
   <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
   <% @production.non_ticketers.sort.each do |u| %>
     <tr><td><%= u.name %></td><td><%= u.email %></td><td>
-          <button type="button" class="btn btn-success">Add to Production</button>
+        <button data-href="/user/<%=u.id%>/make_ticketer/<%=@production.id%>/0" class="btn btn-success make_ticketer">Add to Production</button>
       </td>
+    </tr>
   <% end %>
 </table>
 
