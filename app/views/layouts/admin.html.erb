@@ -13,7 +13,7 @@
     <% unless @production.nil? %>
       <li><a href="/production/<%= @production.webname %>"><%= @production.full_title %></a></li>
       
-      <% if current_user.can_manage @production %>
+      <% if current_user and current_user.can_manage @production %>
         <li><a href="/production/<%= @production.webname %>/manage">Manage Ticketers</a></li>
       <% end %>
     <% end %>
