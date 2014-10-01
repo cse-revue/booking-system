@@ -1,0 +1,43 @@
+<h2>Ticketers for <%= @production.title %></h2>
+<input id="search-ticketers" type="text" class="form-control" placeholder="Search Ticketers">
+<table id="ticketers" class="table">
+  <tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+  <% @production.ticketers.sort.each do |u| %>
+    <tr><td><%= u.name %></td><td><%= u.email %></td><td>
+        <% if u.superadmin %>
+          <span style='color: blue'>Superadmin</span>
+        <% elsif u.can_manage @production %>
+          <span style='color: green'>Manager</span>
+        <% else %>
+          <span style='color: black'>Ticketer</span>
+        <% end %>
+      </td>
+      <td>
+        <% if u.can_manage @production and not u.superadmin%>
+          <% if current_user.superadmin %>
+            <button type="button" class="btn btn-warning">Demote to Ticketer</button>
+          <% end %>
+          <button type="button" class="btn btn-danger">Remove from Production</button>
+        <% elsif not u.superadmin %> 
+          <% if current_user.superadmin %>
+            <button type="button" class="btn btn-success">Promote to Manager</button>
+          <% end %>
+          <button type="button" class="btn btn-danger">Delete from Production</button>
+        <% end %>
+      </td>
+  <% end %>
+</table>
+
+<h2>Non Ticketers for <%= @production.title %></h2>
+
+<input id="search-non-ticketers" type="text" class="form-control" placeholder="Search Non Ticketers">
+<table id="non-ticketers" class="table">
+  <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
+  <% @production.non_ticketers.sort.each do |u| %>
+    <tr><td><%= u.name %></td><td><%= u.email %></td><td>
+          <button type="button" class="btn btn-success">Add to Production</button>
+      </td>
+  <% end %>
+</table>
+
+
