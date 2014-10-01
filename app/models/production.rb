@@ -61,6 +61,9 @@ class Production < ActiveRecord::Base
   end
 
   def <=> (other)
-    opening_time <=> other.opening_time
+    unless opening_time.nil? or other.opening_time.nil?
+      return opening_time <=> other.opening_time
+    end
+    return 0
   end
 end
