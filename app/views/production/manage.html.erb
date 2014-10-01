@@ -14,12 +14,12 @@
       </td>
       <td>
         <% if u.can_manage @production and not u.superadmin%>
-          <% if current_user.superadmin %>
+          <% if current_user and current_user.superadmin %>
             <button type="button" class="btn btn-warning">Demote to Ticketer</button>
           <% end %>
           <button type="button" class="btn btn-danger">Remove from Production</button>
         <% elsif not u.superadmin %> 
-          <% if current_user.superadmin %>
+          <% if current_user and current_user.superadmin %>
             <button type="button" class="btn btn-success">Promote to Manager</button>
           <% end %>
           <button type="button" class="btn btn-danger">Delete from Production</button>
