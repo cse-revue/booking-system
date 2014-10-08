@@ -19,7 +19,7 @@ Bookingsystem::Application.routes.draw do
   get "production/", to: "production#index"
 
   get "production/modify"
-  get "production/delete"
+  get "production/delete/:id", to: "production#delete"
   get "production/view"
   get "theatre/map/:webname", to: "theatre#map"
   # The priority is based upon order of creation: first created -> highest priority.

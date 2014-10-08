@@ -1,7 +1,12 @@
 <h2>Productions</h2>
 <table class="table">
-  <tr><th>Production</th><th>Sold Tickets</th></tr>
+  <tr><th>Production</th><th>Sold Tickets</th><th></th></tr>
 <% current_user.productions.sort.reverse.each do |p| %>
-  <tr><td><a href="/production/<%= p.webname %>"><%= p.full_title %></a></td><td><%= p.seats_filled.length %></td></tr>
+  <tr><td><a href="/production/<%= p.webname %>"><%= p.full_title %></a></td><td><%= p.seats_filled.length %></td>
+    <td>
+      <% if current_user.superadmin and p.seats_filled.length == 0 %>
+        <a href="/production/delete/<%=p.id%>" class="btn btn-danger btn-sm">Delete</a>
+      <% end %>
+    </td></tr>
 <% end %>
 </table>

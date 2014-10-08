@@ -11,10 +11,10 @@
       <li><a href="/user">Production List</a></li>
     <% end %>
     <% unless @production.nil? %>
-      <li><a href="/production/<%= @production.webname %>"><%= @production.full_title %></a></li>
+      <li><a href="/production/<%= @production.webname %>">Sales</a></li>
       
       <% if current_user and current_user.can_manage @production %>
-        <li><a href="/production/<%= @production.webname %>/manage">Manage Ticketers</a></li>
+        <li><a href="/production/<%= @production.webname %>/manage">Ticketers</a></li>
       <% end %>
     <% end %>
 

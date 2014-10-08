@@ -6,7 +6,7 @@ class ProductionController < ApplicationController
 
   def do_create
     prod = Production.create production_params
-    redirect_to "/production/#{prod.webname}"
+    redirect_to "/user"
   end
 
   def create
@@ -31,6 +31,9 @@ class ProductionController < ApplicationController
   end
 
   def delete
+    @production = Production.find_by id: params[:id]
+    @production.destroy
+    redirect_to "/user"
   end
 
   def view
